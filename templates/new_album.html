@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block body %} 
+<doctype html>
+<div id="content-wrapper">
+
+     <div class="container-fluid">
+<title>Create New Invoice</title>
+
+<ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">Invoice</a>
+          </li>
+          <li class="breadcrumb-item active">Add</li>
+        </ol>
+
+     <h2>Create New Invoice</h2>
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+    <dl>
+        {{ render_field(form.artist) }}
+        {{ render_field(form.title) }}
+        {{ render_field(form.release_date) }}
+        {{ render_field(form.publisher) }}
+        {{ render_field(form.status) }}
+    </dl>
+    <input type=submit value=Submit>
+</form>
+</div>
+</div>
+{% endblock %}

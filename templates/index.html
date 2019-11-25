@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block body %} 
+<doctype html>
+<head>
+   <center><title>Invoice Form Details</title></center> 
+</head>
+<ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">Invoice</a>
+          </li>
+          <li class="breadcrumb-item active">Search</li>
+        </ol>
+
+<h2>Invoice Form Details</h2>
+
+<div id="content-wrapper">
+
+      <div class="container-fluid">
+    
+   <div class="col-lg-12 text-right">
+      <span class="d-inline">
+    
+    <a class="primary_btn" href="{{ url_for('.new_album') }}"><i
+            class="fa fa-plus"></i>
+          Add New Invoice
+    </a></span>
+    </div>
+<br>
+<br>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+  <dl>
+    {{ render_field(form.select) }}
+    <p>
+    {{ render_field(form.search) }}
+  </dl>
+  <p><input type=submit value=Search>
+</form>
+{% endblock %}
