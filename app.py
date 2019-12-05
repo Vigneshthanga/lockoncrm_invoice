@@ -4,7 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__,static_url_path='/invoice/static')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ticket:C65EJ9u0VBUPVWU7@192.168.33.15:3306/ticket'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://invoice:9EycRPJTDwHgaajQ@192.168.33.15:3306/invoice'
 app.secret_key = "flask rocks!"
 
 db = SQLAlchemy(app)
