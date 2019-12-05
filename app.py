@@ -15,7 +15,7 @@ from flask import flash, render_template, request, redirect
 from models import Album, Artist
 from tables import Results
 
-init_db()
+#init_db()
 
 @app.route('/invoice/home')
 def home():
