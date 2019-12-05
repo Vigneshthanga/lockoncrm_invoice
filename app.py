@@ -29,15 +29,15 @@ def contact():
 def about():
     return render_template('about.html')
 
-@app.route('/invocie/charts')
+@app.route('/invoice/charts')
 def charts():
     return render_template('charts.html')
 
-@app.route('/invocie/search')
+@app.route('/invoice/search')
 def search():
     return render_template('search.html')
 
-@app.route('/invocie', methods=['GET', 'POST'])
+@app.route('/invoice', methods=['GET', 'POST'])
 def index():
     search = MusicSearchForm(request.form)
     if request.method == 'POST':
@@ -45,7 +45,7 @@ def index():
 
     return render_template('index.html', form=search)
 
-@app.route('/invocie/results')
+@app.route('/invoice/results')
 def search_results(search):
     results = []
     search_string = search.data['search']
@@ -64,7 +64,7 @@ def search_results(search):
         return render_template('results.html', table=table)
 
 
-@app.route('/invocie/new_album', methods=['GET', 'POST'])
+@app.route('/invoice/new_album', methods=['GET', 'POST'])
 def new_album():
     """
     Add a new album
