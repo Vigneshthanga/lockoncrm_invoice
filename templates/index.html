@@ -6,7 +6,7 @@
 </head>
 <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Invoice</a>
+            <a href="{{ url_for('new_album') }}">Invoice</a>
           </li>
           <li class="breadcrumb-item active">Search</li>
         </ol>
@@ -20,7 +20,7 @@
    <div class="col-lg-12 text-right">
       <span class="d-inline">
     
-    <a class="primary_btn" href="{{ url_for('.new_album') }}"><i
+    <a class="primary_btn" href="{{ url_for('new_album') }}"><i
             class="fa fa-plus"></i>
           Add New Invoice
     </a></span>

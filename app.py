@@ -4,18 +4,21 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__,static_url_path='/invoice/static')
-app.config['SQLALCHEMY_DATABASE_URI']="mysql+pymysql://invoice:commonsyspass@192.168.33.15:3306/invoice"
+app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://invoice:commonsyspass@192.168.33.15:3306/invoice'
 app.secret_key = "flask rocks!"
-
-db = SQLAlchemy(app)
 
 from db_setup import init_db, db_session
 from forms import MusicSearchForm, AlbumForm
 from flask import flash, render_template, request, redirect
 from models import Album, Artist
 from tables import Results
+from models import db
 
 #init_db()
+db.init_app(app)
+with app.app_context():
+	db.create_all()
+
 
 @app.route('/invoice/home')
 def home():
@@ -33,11 +36,11 @@ def about():
 def charts():
     return render_template('charts.html')
 
-@app.route('/invoice/search')
+@app.route('/invoice/')
 def search():
     return render_template('search.html')
 
-@app.route('/invoice', methods=['GET', 'POST'])
+@app.route('/invoice/invoice', methods=['GET', 'POST'])
 def index():
     search = MusicSearchForm(request.form)
     if request.method == 'POST':
@@ -56,7 +59,7 @@ def search_results(search):
 
     if not results:
         flash('No results found!')
-        return redirect('/invocie')
+        return redirect('/invoice/invoice')
     else:
         # display results
         table = Results(results)
@@ -75,11 +78,11 @@ def new_album():
         # save the album
         album = Album()
         save_changes(album, form, new=True)
-        flash('Album created successfully!')
-        return redirect('/invoice')
+        flash('Invoice created successfully!')
+        return redirect('/invoice/') 
 
     return render_template('new_album.html', form=form)
-
+     
 def save_changes(album, form, new=False):
     """
     Save the changes to the database
@@ -114,8 +117,8 @@ def edit(id):
         if request.method == 'POST' and form.validate():
             # save edits
             save_changes(album, form)
-            flash('Album updated successfully!')
-            return redirect('/')
+            flash('Invoice updated successfully!')
+            return redirect('/invoice/')
         return render_template('edit_album.html', form=form)
     else:
         return 'Error loading #{id}'.format(id=id)
