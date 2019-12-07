@@ -3,7 +3,7 @@ from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 
-engine = create_engine('postgresql://ranjani:SRbravard@94@localhost:5432/sample', echo=True)
+engine = create_engine('postgresql://ranjani:SRbravard@94@localhost:5432/sampl', echo=True)
 Base = declarative_base()
 
 

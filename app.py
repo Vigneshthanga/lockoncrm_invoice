@@ -7,7 +7,7 @@ app = Flask(__name__,static_url_path='/invoice/static')
 app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://invoice:commonsyspass@192.168.33.15:3306/invoice'
 app.secret_key = "flask rocks!"
 
-from db_setup import init_db, db_session
+#from db_setup import init_db, db_session
 from forms import MusicSearchForm, AlbumForm
 from flask import flash, render_template, request, redirect
 from models import Album, Artist
@@ -54,7 +54,7 @@ def search_results(search):
     search_string = search.data['search']
 
     if search.data['search'] == '':
-        qry = db_session.query(Album)
+        qry = db.session.query(Album)
         results = qry.all()
 
     if not results:
@@ -74,16 +74,16 @@ def new_album():
     """
     form = AlbumForm(request.form)
 
-    if request.method == 'POST' and form.validate():
+    if request.method == 'POST':
         # save the album
         album = Album()
         save_changes(album, form, new=True)
         flash('Invoice created successfully!')
-        return redirect('/invoice/') 
+        return redirect('/invoice/invoice') 
 
     return render_template('new_album.html', form=form)
      
-def save_changes(album, form, new=False):
+def save_changes(albums, form, new=False):
     """
     Save the changes to the database
     """
@@ -92,33 +92,33 @@ def save_changes(album, form, new=False):
     artist = Artist()
     artist.name = form.artist.data
 
-    album.artist = artist
-    album.title = form.title.data
-    album.release_date = form.release_date.data
-    album.publisher = form.publisher.data
-    album.status = form.status.data
+    albums.artist = artist
+    albums.title = form.title.data
+    albums.release_date = form.release_date.data
+    albums.publisher = form.publisher.data
+    albums.status = form.status.data
 
 
     if new:
         # Add the new album to the database
-        db_session.add(album)
+        db.session.add(albums)
 
     # commit the data to the database
-    db_session.commit()
+    db.session.commit()
 
 @app.route('/invoice/item/<int:id>', methods=['GET', 'POST'])
 def edit(id):
-    qry = db_session.query(Album).filter(
+    qry = db.session.query(Album).filter(
                 Album.id==id)
     album = qry.first()
 
     if album:
         form = AlbumForm(formdata=request.form, obj=album)
-        if request.method == 'POST' and form.validate():
+        if request.method == 'POST':
             # save edits
             save_changes(album, form)
             flash('Invoice updated successfully!')
-            return redirect('/invoice/')
+            return redirect('/invoice/invoice')
         return render_template('edit_album.html', form=form)
     else:
         return 'Error loading #{id}'.format(id=id)
