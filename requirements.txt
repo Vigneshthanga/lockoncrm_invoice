@@ -8,7 +8,7 @@ WTForms_Components
 Flask-SQLAlchemy==2.4.0
 simplejson
 Flask-WTF
-Jinja2==2.10.1
+Jinja2==2.11.3
 git+git://github.com/Vigneshthanga/lockoncrm_common@master
 authlib
 six
